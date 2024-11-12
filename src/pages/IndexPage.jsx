@@ -240,7 +240,7 @@ export const IndexPage = () => {
     <Container sx={{ mt: "5rem" }}>
       <Grid container spacing={2} sx={{ position: "relative" }}>
         <Grid item xs={12} md={8}>
-          <Box
+        <Box
             borderRadius="10px"
             boxShadow="0px 0px 5px rgba(0,0,0,0.2)"
             mb="15px"

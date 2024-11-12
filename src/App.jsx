@@ -16,16 +16,29 @@ import { ProfilePage } from "./pages/profile";
 import { FavoritePage } from "./pages/favorite";
 import { OwnerPostPage } from "./pages/owner_post";
 import { PaymentHistory } from "./pages/payments-history/PaymentHistory";
+import { MessagePage } from "./pages/messages/Message";
+import { useState } from "react";
+import ChatComponent from "./components/ChatComponent";
+import { SomeOnePage } from "./pages/someone";
 
 const role = localStorage.getItem("role");
+const userId = localStorage.getItem("id");
+const ownAvatar = localStorage.getItem("avatar");
+const name = localStorage.getItem("fullname")
 function App() {
+  const [receiver, setReceiver] = useState(null);
+
+  const handleOpenChat = (receiver) =>{
+    setReceiver(receiver);
+  };
+
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<IndexPage />} />
-            <Route path="/realEstate/:id" element={<RealEstateDetailPage />} />
+            <Route path="/realEstate/:id" element={<RealEstateDetailPage onChatClick={handleOpenChat} />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/new-post" element={<NewPostPage />} />
@@ -34,6 +47,8 @@ function App() {
             <Route path="/favorite" element={<FavoritePage/>}/>
             <Route path="/owner_post" element={<OwnerPostPage/>} />
             <Route path="/payment-history" element={<PaymentHistory/>}/>
+            <Route path="/message" element={<MessagePage/>}/>
+            <Route path="/user/:id" element={<SomeOnePage />}/>
           </Route>
           {role === "ROLE_ADMIN" ? (
             <Route path="/admin/*" element={<AdminLayout />}>
@@ -47,6 +62,10 @@ function App() {
           )}
           <Route path="*" element={<PageNotFound />} />
         </Routes>
+
+      {userId && receiver && (
+        <ChatComponent userId={userId} receiver={receiver} ownerAvatar={ownAvatar} ownerName={name}  />
+      )}
       </BrowserRouter>
     </>
   );

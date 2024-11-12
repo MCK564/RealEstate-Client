@@ -71,6 +71,24 @@ export async function buyPost(data){
   }
 }
 
+export async function  getChatHistory(senderId, receiverId) {
+  try {
+   
+    const token = localStorage.getItem('token');
+
+    // Gọi API để lấy lịch sử chat
+    const response = await api.get(`/conversations/${senderId}/${receiverId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`  
+      }
+    });
+
+  
+   return response.data;
+  } catch (error) {
+    console.error('Error fetching chat history:', error);
+  }
+}
 export async function handleAfterPayment(){
 
 }
@@ -114,6 +132,30 @@ export async function register2(user) {
 export async function getUserById() {
   try {
     const id = localStorage.getItem("id");
+    const token = localStorage.getItem("token");
+    const response = await api.get("/users/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 200) {
+      const user = response.data;
+      return user;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    
+    if (error.response && error.response.status === 401) {
+      localStorage.clear();
+      window.location.href = "/login";
+    }
+    return false;
+  }
+}
+
+export async function getUserDetailById(id) {
+  try {
     const token = localStorage.getItem("token");
     const response = await api.get("/users/" + id, {
       headers: {
@@ -246,6 +288,48 @@ export async function findBuildingsByUserId() {
     return false;
   }
 }
+export async function findContactedsById(id) {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await api.get("/users/contacteds/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 200) {
+      return response.data.userResponses;
+    }
+    return false;
+  } catch (error) {
+    console.error("searchUsers error:", error);
+    if (error.response && error.response.status === 401) {
+      localStorage.clear();
+      window.location.href = "/login";
+    }
+    return false;
+  }
+}
+
+export async function findBuildingBySomeoneId(id) {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await api.get("/buildings/owner/" + id, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.status === 200) {
+      return response.data.buildings;
+    }
+    return false;
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      localStorage.clear();
+      window.location.href = "/login";
+    }
+    return false;
+  }
+}
 
 export async function findBuildingsByOwnerId(id) {
   try {
@@ -291,6 +375,30 @@ export async function findBuildingsById() {
   }
 }
 
+export async function getAllConnecteds(){
+  try{
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("id");
+    const response = await api.get(`/conversations/${id}`,{
+      headers:
+      {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+   
+    if(response.status === 200){
+      return response.data;
+    }
+
+
+  }catch(error){
+    if (error.response && error.response.status === 401) {
+      localStorage.clear();
+      window.location.href = "/login";
+    }
+    return false;
+  }
+}
 export async function deleteById(buildingId) {
   try {
     const token = localStorage.getItem("token");
@@ -306,7 +414,7 @@ export async function deleteById(buildingId) {
       return false;
     }
   } catch (error) {
-    console.error("searchUsers error:", error);
+    
     if (error.response && error.response.status === 401) {
       localStorage.clear();
       window.location.href = "/login";
@@ -449,7 +557,7 @@ export async function searchBuildings(data) {
         "Content-Type": "application/json",
       },
     });
-    console.log(response);
+   
     if (response.status === 200) {
       return response.data;
     }

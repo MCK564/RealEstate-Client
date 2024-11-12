@@ -1,4 +1,7 @@
 module.exports = {
+  globals: {
+    global: 'readonly' // khai báo global để ESLint nhận biết biến này
+  },
   root: true,
   env: { browser: true, es2020: true },
   extends: [

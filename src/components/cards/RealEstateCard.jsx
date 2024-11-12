@@ -14,7 +14,7 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Link as RouterLink } from "react-router-dom";
+import { Link, Link as RouterLink } from "react-router-dom";
 import { addToFavorite } from "../../utils/ApiFunction";
 import Crop32Icon from '@mui/icons-material/Crop32';
 import { useNavigate } from "react-router-dom";
@@ -77,11 +77,14 @@ export const RealEstateCard = ({ props }) => {
           borderTopRightRadius: "10px",
         }}
       >
+        <Link to={`user/${owner.id}`}>
+
+       
         <Avatar
           alt={owner1.fullname}
           src={owner1.avatar}
           sx={{ bgcolor: "deepskyblue" }}
-        />
+        /> </Link>
         <Stack sx={{ textAlign: "center" }}>
           <Typography fontWeight="500" textAlign="left" variant="h6">
             {owner1.fullname}
@@ -123,7 +126,6 @@ export const RealEstateCard = ({ props }) => {
                sx={{
                 margin:{md:"10px"}
                }}
-             
               >
                 {[
                   {
@@ -142,14 +144,16 @@ export const RealEstateCard = ({ props }) => {
                     text:"Diện tích: " +floorArea+" m2",
                     icon:<Crop32Icon fontSize="small"/>
                   }
-                ].map((item) => (
+                ].map((item,key) => (
                   <>
                     <Box
+                      key={key}
                       color="gray"
                       size="small"
                       sx={{ textTransform: "none", px: 0 }}
                       display="flex"
                       gap={1}
+                     
                     >
                      {item.icon} {item.text}
                     </Box>

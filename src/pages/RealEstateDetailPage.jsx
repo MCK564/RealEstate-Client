@@ -40,6 +40,7 @@ import { createCommunication } from "../utils/ApiFunction";
 import appEnqueueSnackbar from "../utils/AppSnackbar";
 import poster from "../assets/images/poster.jpg"
 import poster2 from "../assets/images/poster2.png"
+import MessageIcon from '@mui/icons-material/Message';
 
 const InfoBox = ({ title, value, optionalInfo }) => {
   return (
@@ -55,7 +56,7 @@ const InfoBox = ({ title, value, optionalInfo }) => {
   );
 };
 
-export const RealEstateDetailPage = () => {
+export const RealEstateDetailPage = ({onChatClick}) => {
   const navigate = useNavigate();
   const [existingBuilding, setExistingBuilding] = useState({
     id:"",
@@ -77,6 +78,8 @@ const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 const [showPhoneNumber, setShowPhoneNumber] = useState(false);
 const [dataLoaded, setDataLoaded] = useState(false);
 const [building_id, setBuilding_id] = useState();
+
+
 const handleTogglePhoneNumber = () => {
   setShowPhoneNumber(!showPhoneNumber);
 };
@@ -87,6 +90,13 @@ const handleClickOpen = () => {
 const handleClose = () => {
   setOpen(false);
 };
+
+const handleChatClick = () =>{
+  onChatClick(existingBuilding.owner);
+}
+
+
+
 
 useEffect(() => {
   var currentURL = window.location.href.split("/");
@@ -138,6 +148,8 @@ useEffect(() => {
       }
     });
   };
+
+
   return (
     <Container sx={{ mt: "5rem" }}>
       <Grid container spacing={2} sx={{ position: "relative" }}>
@@ -385,7 +397,6 @@ useEffect(() => {
             </Grid>
           </Stack>
         </Grid>
-
         <Grid
           item
           xs={12}
@@ -465,23 +476,43 @@ useEffect(() => {
               )}
             </Box>
 
-            <Button
-              variant="contained"
-              onClick={handleClickOpen}
-              sx={{
-                bgcolor: "#fff",
-                color: "#00994c",
-                p: "8px 20px",
-                border: "1px solid #00994c",
-                "&:hover": {
+              <Button
+                variant="contained"
+                onClick={handleClickOpen}
+                sx={{
                   bgcolor: "#fff",
-                },
-              }}
-              startIcon={<EmailIcon />}
-              fullWidth
-            >
-              Gửi tin nhắn
-            </Button>
+                  color: "#00994c",
+                  p: "8px 20px",
+                  border: "1px solid #00994c",
+                  "&:hover": {
+                    bgcolor: "#fff",
+                  },
+                }}
+                startIcon={<EmailIcon />}
+                fullWidth
+              >
+                Gửi tin nhắn
+              </Button>
+
+              <Button
+            
+                variant="contained"
+                onClick={handleChatClick}
+                sx={{
+                  marginTop:"15px",
+                  bgcolor: "#fff",
+                  color: "#00994c",
+                  p: "8px 20px",
+                  border: "1px solid #00994c",
+                  "&:hover": {
+                    bgcolor: "#fff",
+                  },
+                }}
+                startIcon={<MessageIcon />}
+                fullWidth
+              >
+             Trò chuyện trực tiếp
+              </Button>
           </Box>
           <Box mt="20px" sx={{ maxWidth: 600, mx: 'auto', bgcolor: 'black', boxShadow: 3, borderRadius: "15px"}}>
       

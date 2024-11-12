@@ -23,7 +23,7 @@ export default function Footer() {
         <Typography variant="body2" color="text.secondary" align="center" >
           {"Copyright © "} 
           <Link color="inherit" href="/">
-            RealEstate
+           RAOVAT
           </Link>{" "}
           {new Date().getFullYear()}
           {"."}

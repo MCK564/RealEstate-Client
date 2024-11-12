@@ -9,8 +9,9 @@ import Button from "@mui/material/Button";
 import LandscapeIcon from "@mui/icons-material/Landscape";
 import PostAddIcon from "@mui/icons-material/PostAdd";
 import RestoreIcon from '@mui/icons-material/Restore';
+import MessageIcon from '@mui/icons-material/Message';
 
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link, Link as RouterLink, useNavigate } from "react-router-dom";
 import {
   Avatar,
   Divider,
@@ -275,6 +276,12 @@ export const MainAppbar = () => {
                     Tới trang quản lý
                   </Button>
                 )}
+                
+                 <IconButton onClick ={()=>navigate("/message")}>
+                 <MessageIcon fontSize="medium" sx={{ color: 'blue' }} />
+                 </IconButton>
+
+               
                 {isLogIn ? (
                   <>
                     <FavoriteButton />
@@ -311,6 +318,11 @@ export const MainAppbar = () => {
                 gap: 1,
               }}
             >
+
+                <IconButton onClick ={()=>navigate("/message")}>
+                 <MessageIcon fontSize="medium" sx={{ color: 'blue' }} />
+                 </IconButton>
+
               {isLogIn && (
                 <>
                   <FavoriteButton />
